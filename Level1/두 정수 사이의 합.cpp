@@ -1,24 +1,21 @@
 #include <string>
 #include <vector>
+
 using namespace std;
 
 long long solution(int a, int b) {
     long long answer = 0;
-    int smaller, bigger;
     
-    if(a < b)
+    if(a > b)
     {
-        smaller = a;
-        bigger = b;
+        for(int i = b; i <= a; i++)
+            answer += i;
     }
     else
     {
-        smaller = b;
-        bigger = a;
+        for(int i = a; i <= b; i++)
+            answer += i;
     }
-    
-    for(int i = smaller; i <= bigger; i++)
-        answer += i;
     
     return answer;
 }

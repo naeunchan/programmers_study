@@ -7,12 +7,17 @@ using namespace std;
 vector<int> solution(vector<int> arr) 
 {
     vector<int> answer;
+    int pre = arr[0];
+    answer.push_back(pre);
     
-    answer.push_back(arr.front());
-    for(int i = 0; i < arr.size(); i++)
+    for(int i = 1; i < arr.size(); i++)
     {
-        if(find(answer.end() - 1, answer.end(), arr.at(i)) == answer.end())
-            answer.push_back(arr.at(i));
+        if(pre != arr[i])
+        {
+            pre = arr[i];
+            answer.push_back(pre);
+        }
     }
+    
     return answer;
 }

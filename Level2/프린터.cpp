@@ -1,39 +1,44 @@
 #include <string>
 #include <vector>
-#include <queue>
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 
-int solution(vector<int> priorities, int location) {
-    int answer = 0;
-    queue<int> wait;
-    for(int i = 0; i < priorities.size(); i++)
-        wait.push(priorities[i]);
-    
-    sort(priorities.begin(),priorities.end());    
+bool desc(int a, int b)
+{
+    return a > b;
+}
 
+int solution(vector<int> priorities, int location) {
+    int answer = 1;
+    vector<int> tmp = priorities;
+    
+    sort(tmp.begin(), tmp.end(), desc);
+    
     while(1)
     {
-        if(wait.front() != priorities.back())
+        if(tmp.front() != priorities.front())
         {
-            wait.push(wait.front());
-            wait.pop();
-            location--;
-            if(location < 0)
-                location = wait.size() - 1;
+            if(location == 0)
+                location = priorities.size() - 1;
+            else
+                location--;
+            priorities.push_back(priorities.front());
+            priorities.erase(priorities.begin());
         }
         else
         {
             if(location == 0)
-                return ++answer;
+                return answer;
             else
             {
                 answer++;
-                wait.pop();
-                priorities.pop_back();
+                tmp.erase(tmp.begin());
+                priorities.erase(priorities.begin());
                 location--;
             }
         }
-    }    
+    }
+    return answer;
 }
