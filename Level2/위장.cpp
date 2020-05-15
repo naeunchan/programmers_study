@@ -1,26 +1,17 @@
 #include <string>
 #include <vector>
-#include <iostream>
-#include <unordered_map>
+#include <map>
 
 using namespace std;
 
 int solution(vector<vector<string>> clothes) {
-    unordered_multimap <string,int> c;
     int answer = 1;
+    map<string, int> m;
     
-    if(clothes.size() == 1)
-        return 1;
-    
-    for(auto i : clothes)
-    {
-        auto tmp = c.find(i[1]);
-        if(tmp == c.end())
-            c.emplace(i[1],1);
-        else
-            ++tmp->second;
-    }
-    for(auto i : c)
-        answer *= i.second + 1;
+    for(int i = 0; i < clothes.size(); i++)
+        m[clothes[i][1]]++;
+    for(auto itr = m.begin(); itr != m.end(); itr++)
+        answer *= (itr->second + 1);
+
     return answer - 1;
 }

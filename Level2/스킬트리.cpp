@@ -1,34 +1,40 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 
 int solution(string skill, vector<string> skill_trees) {
     int answer = 0;
     
-    while(!skill_trees.empty())
+    for(int i = 0; i < skill_trees.size(); i++)
     {
-        int check = 0;
-        string s = skill_trees.back();
-        auto index = find(s.begin(),s.end(),skill[0]);
-
-        for(int i = 0; i < skill.size(); i++)
+        int index = 0, cnt = 0;
+        auto before = skill_trees[i].begin();
+        
+        while(1)
         {
-            if(index > find(s.begin(),s.end(),skill[i]))
-            {
-                check = 0;
+            if(index == skill.size())
                 break;
+            
+            auto itr = find(skill_trees[i].begin(), skill_trees[i].end(), skill[index]);
+            
+            if(before <= itr)
+            {
+                index++;
+                cnt++;
+                before = itr;
             }
             else
             {
-                check++;
-                index = find(s.begin(),s.end(),skill[i]);
+                cnt = 0;
+                break;
             }
         }
-        if(check > 0)
+        if(cnt > 0)
             answer++;
-        skill_trees.pop_back();
+        
     }
     return answer;
 }

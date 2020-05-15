@@ -1,25 +1,24 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include <iostream>
+
 using namespace std;
 
 bool solution(vector<string> phone_book) {
-    sort(phone_book.begin(),phone_book.end());
-    string word = phone_book.front();
-    int wordSize = word.size();
-    int bookSize = phone_book.size();
+    bool answer = true;
+    sort(phone_book.begin(), phone_book.end());
     
-    for(int i = 1; i < bookSize; i++)
+    for(int i = 0; i < phone_book.size(); i++)
     {
-        int check = 0;
-        for(int j = 0; j < wordSize; j++)
+        string str = phone_book[i];
+        int size = str.size();
+        
+        for(int j = i + 1; j < phone_book.size(); j++)
         {
-            if(word[j] == phone_book[i][j])
-                check++;
+            string tmp = phone_book[j].substr(0, size);
+            if(str == tmp)
+                return false;
         }
-        if(check == wordSize)
-            return false;
     }
-    return true;
+    return answer;
 }
