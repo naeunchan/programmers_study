@@ -1,27 +1,35 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include <sstream>
 
 using namespace std;
 
-string solution(string s) {
-    string answer = "", token = "";
-    int minV, maxV;
-    vector<int> num;
-    
-    for(stringstream str(s); (str >> token);)
-        num.push_back(stoi(token));    
-    
-    minV = num[0];
-    maxV = num[0];
-    
-    for(int i = 1; i < num.size(); i++)
+int gcd(int a, int b)
+{
+    int c;
+    while(b != 0)
     {
-        minV = min(minV, num[i]);
-        maxV = max(maxV, num[i]);
+        c = a % b;
+        a = b;
+        b = c;
     }
+    return a;
+}
+
+int lcm(int a, int b)
+{
+    return a * b / gcd(a, b);
+}
+
+int solution(vector<int> arr) {
+    int answer = 0;
     
-    answer = to_string(minV) + ' ' + to_string(maxV);
+    sort(arr.begin(), arr.end());
+    
+    for(int i = 0; i < arr.size() - 1; i++)
+    {
+        answer = lcm(arr[i], arr[i + 1]);
+        arr[i + 1] = answer;
+    }
     return answer;
 }

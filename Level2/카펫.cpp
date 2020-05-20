@@ -1,36 +1,34 @@
 #include <string>
 #include <vector>
 #include <iostream>
+
 using namespace std;
 
-vector<int> solution(int brown, int red) {
+vector<int> solution(int brown, int yellow) {
     vector<int> answer;
-    int sum = brown + red;
-    int a = 0, b = 0;
-    int index = sum;
-    bool check[sum + 1];
+    int current = brown + yellow;
+    int sum = current;
     
-    for(int i = 2; i <= sum; i++)
+    while(current > 1)
     {
-        check[i] = false;
-        if(sum % i == 0)
-            check[i] = true;
-    }
-    
-    while(1)
-    {
-        if(index < brown && check[index] == true)
+        if(sum % current == 0)
         {
-            a = index;
-            b = sum / index;
-            if(2 * a + (b - 2) * 2 == brown)
+            int row = current;
+            int col = sum / current;
+            
+            if(col > 1 && row >= col && row * 2 < brown)
             {
-                answer.push_back(a);
-                answer.push_back(b);
-                return answer;
+                int checkY = row * (col - 2) - (2 * (col - 2));
+                
+                if(checkY == yellow)
+                {
+                    answer.push_back(row);
+                    answer.push_back(col);
+                    return answer;
+                }
             }
         }
-        index--;
+        current--;
     }
     return answer;
 }

@@ -1,23 +1,22 @@
 #include <iostream>
-#include <stack>
 #include <string>
+#include <stack>
 using namespace std;
 
 int solution(string s)
 {
-    int answer = 0, j = 0;
-    stack<char> word;
-    char pre;
+    int answer = 0;
+    stack<char> stk;
     
     for(int i = 0; i < s.size(); i++)
     {
-        if(word.empty() || word.top() != s[i])        
-            word.push(s[i]);
+        if(stk.empty() || stk.top() != s[i])
+            stk.push(s[i]);
         else
-            word.pop();
+            stk.pop();
     }
-    
-    if(word.empty())
-        answer = 1;
-    return answer;
+    if(stk.empty())
+        return 1;
+    else
+        return 0;
 }
