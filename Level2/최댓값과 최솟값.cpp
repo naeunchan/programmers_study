@@ -1,35 +1,19 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <sstream>
 
 using namespace std;
 
-int gcd(int a, int b)
-{
-    int c;
-    while(b != 0)
-    {
-        c = a % b;
-        a = b;
-        b = c;
-    }
-    return a;
-}
-
-int lcm(int a, int b)
-{
-    return a * b / gcd(a, b);
-}
-
-int solution(vector<int> arr) {
-    int answer = 0;
+string solution(string s) {
+    string answer = "", token = "";
+    vector<int> v;
+    int min = 0, max = 0;
     
-    sort(arr.begin(), arr.end());
+    for(stringstream str(s); str >> token;)
+        v.push_back(stoi(token));
+    sort(v.begin(), v.end());
     
-    for(int i = 0; i < arr.size() - 1; i++)
-    {
-        answer = lcm(arr[i], arr[i + 1]);
-        arr[i + 1] = answer;
-    }
+    answer += to_string(v.front()) + ' ' + to_string(v.back());
     return answer;
 }

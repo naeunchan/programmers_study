@@ -1,24 +1,23 @@
 #include <string>
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
 int solution(int n) {
-    int answer = 1, tmp = 1, front = 1, end = 2;
+    int answer = 0, start = 1;
     
-    while(1)
+    while(start <= n)
     {
-        if(tmp == n)
+        int tmp = 0;
+        
+        for(int i = start; tmp <= n; i++)
         {
-            answer++;
-            tmp -= (front++);
+            if(tmp == n)
+                answer++;
+            tmp += i;
         }
-        else if(tmp > n)
-            tmp -= (front++);
-        else
-            tmp += (end++);
-        if(end == n)
-            break;
+        start++;
     }
     return answer;
 }
