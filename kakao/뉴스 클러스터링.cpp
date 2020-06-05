@@ -1,67 +1,66 @@
 #include <string>
-#include <vector>
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 
 int solution(string str1, string str2) {
-    int answer = 0, a = 0, b = 0; //a = intersection, b = union
-    vector<string> A, B;
+    int answer = 0, min = 0, max = 0;
+    vector<string> s1, s2, words;
+    
     transform(str1.begin(), str1.end(), str1.begin(), ::tolower);
     transform(str2.begin(), str2.end(), str2.begin(), ::tolower);
     
     for(int i = 0; i < str1.size() - 1; i++)
     {
-        if((str1[i] >= 'a' && str1[i] <= 'z') && (str1[i + 1] >= 'a' && str1[i + 1] <= 'z'))
-        {
-            A.push_back(str1.substr(i, 2));
-        }
+        string tmp = str1.substr(i, 2);
+        if(tmp[0] >= 'a' && tmp[0] <= 'z' && tmp[1] >= 'a' && tmp[1] <= 'z')
+            s1.push_back(tmp);
     }
+    
     for(int i = 0; i < str2.size() - 1; i++)
     {
-        if((str2[i] >= 'a' && str2[i] <= 'z') && (str2[i + 1] >= 'a' && str2[i + 1] <= 'z'))
-        {
-            B.push_back(str2.substr(i, 2));
-        }
+        string tmp = str2.substr(i, 2);
+        if(tmp[0] >= 'a' && tmp[0] <= 'z' && tmp[1] >= 'a' && tmp[1] <= 'z')
+            s2.push_back(tmp);
     }
     
-    if(A.empty() && B.empty())
+    if(s1.empty() && s2.empty())
         return 65536;
     
-    b = A.size() + B.size();
-    sort(A.begin(), A.end());
-    sort(B.begin(), B.end());
+    max = s1.size() + s2.size();
     
-    if(A.size() <= B.size())
+    if(s1.size() > s2.size())
     {
-        for(int i = 0; i < A.size(); i++)
+        for(int i = 0; i < s2.size(); i++)
         {
-            auto itr = find(B.begin(), B.end(), A[i]);
-            if(itr != B.end())
+            auto itr = find(s1.begin(), s1.end(), s2[i]);
+            if(itr != s1.end())
             {
-                a++;
-                B.erase(itr);
+                min++;
+                s1.erase(itr);
             }
         }
     }
     else
     {
-        for(int i = 0; i < B.size(); i++)
+        for(int i = 0; i < s1.size(); i++)
         {
-            auto itr = find(A.begin(), A.end(), B[i]);
-            if(itr != A.end())
+            auto itr = find(s2.begin(), s2.end(), s1[i]);
+            if(itr != s2.end())
             {
-                a++;
-                A.erase(itr);
+                min++;
+                s2.erase(itr);
             }
         }
     }
-    b -= a;
     
-    if(b == 0)
-        answer = 65536;
-    else
-        answer = (int)(((float)(a) / (float)(b)) * 65536);
+    max -= min;
     
-    return answer;
+    if(max == 0)
+        return 65536;
+        
+    double tmp = (double)min / (double)max;
+    
+    return tmp * 65536;
 }
