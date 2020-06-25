@@ -5,15 +5,14 @@ using namespace std;
 
 long long solution(int N) {
     long long answer = 0;
-    long long num[81] = {0, };
+    long long arr[80] = {0, };
     
-    num[1] = 1;
-    num[2] = 1;
+    arr[1] = 1;
+    arr[2] = 1;
     
     for(int i = 3; i <= N; i++)
-        num[i] = num[i - 1] + num[i - 2];
+        arr[i] = arr[i - 1] + arr[i - 2];
     
-    answer = (4 * num[N]) + (2 * num[N - 1]);
-    
+    answer = (arr[N] * 4) + (arr[N - 1] * 2);
     return answer;
 }
