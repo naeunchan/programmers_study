@@ -1,15 +1,14 @@
-function solution(numbers) {
-    let answer = [];
-    
-    for(let i = 0; i < numbers.length; i++){
-        for(let j = i + 1; j < numbers.length; j++){
-            answer.push(numbers[i] + numbers[j]);
-        }
+function solution(participant, completion) {
+  let answer = "";
+
+  participant.sort();
+  completion.sort();
+
+  for (let i = 0; i < participant.length; i++) {
+    if (participant[i] != completion[i]) {
+      answer = participant[i];
+      break;
     }
-    
-    answer = Array.from(new Set(answer)).sort((a, b) => {
-        return a - b;
-    });
-    
-    return answer;
+  }
+  return answer;
 }
