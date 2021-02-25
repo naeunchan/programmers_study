@@ -4,13 +4,6 @@ function solution(answers) {
   let B = [2, 1, 2, 3, 2, 4, 2, 5];
   let C = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5];
 
-  let aScore = 0,
-    bScore = 0,
-    cScore = 0;
-  let aIndex = 0,
-    bIndex = 0,
-    cIndex = 0;
-
   let aCount = answers.filter((val, index) => val === A[index % A.length]).length;
   let bCount = answers.filter((val, index) => val === B[index % B.length]).length;
   let cCount = answers.filter((val, index) => val === C[index % C.length]).length;
