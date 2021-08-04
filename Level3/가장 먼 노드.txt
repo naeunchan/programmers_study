@@ -1,0 +1,60 @@
+class Queue{
+    constructor(){
+        this.queue = [];
+        this.front = 0;
+        this.rear = 0;
+    }
+    
+    push(value){
+        this.queue[this.rear++] = value;
+    }
+    
+    pop(){
+        const value = this.queue[this.front];
+        delete this.queue[this.front++];
+        
+        return value;
+    }
+    
+    size(){
+        return this.rear - this.front;
+    }
+}
+
+function solution(n, edge) {
+    let answer = 0;
+    const queue = new Queue();
+    const graph = Array.from(Array(n + 1), () => []);
+    const visited = Array.from(Array(n + 1).fill(false));
+    
+    for(const v of edge){
+        const e1 = v[0];
+        const e2 = v[1];
+        
+        graph[e1].push(e2);
+        graph[e2].push(e1);
+    }
+    
+    queue.push(1);
+    visited[1] = true;
+    
+    while(queue.size()){
+        let size = queue.size();
+        answer = size;
+        
+        while(size--){
+            const start = queue.pop();
+            
+            for(let i = 0; i < graph[start].length; i++){
+                const target = graph[start][i];
+                
+                if(!visited[target]){
+                    queue.push(target);
+                    visited[target] = true;
+                }
+            }
+        }
+    }
+    
+    return answer;
+}
